@@ -62,7 +62,7 @@ for i in range(STUNUM):
 <p align="center">
     <img src="https://github.com/wokegrdws/Markdown-Images/blob/master/大运村电梯优化图集/现在情况结果.png"  width=80% height=80%>
     <p align="center">
-        <em>现在情况仿真结果</em>
+        <em></em>
     </p>
 </p>
 
@@ -88,4 +88,23 @@ for i in range(STUNUM):
 ```
 
 其余不变进行仿真。
+
+**单数**电梯的仿真结果是:
+```python
+学生的平均等待时间是43.54270000000004
+```
+
+**双数**电梯的仿真结果是:
+```python
+学生的平均等待时间是45.633866666666734
+```
+
+<figure class="half">
+    <img src="https://github.com/wokegrdws/Markdown-Images/blob/master/大运村电梯优化图集/奇数情况结果.png">
+    <img src="https://github.com/wokegrdws/Markdown-Images/blob/master/大运村电梯优化图集/偶数情况结果.png">
+</figure>
+
+
+
+
 
