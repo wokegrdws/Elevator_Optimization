@@ -51,7 +51,7 @@ for i in range(STUNUM):
     stu[i].floor = random.randint(FLOLOW, FLOHIGH) #产生(包括)最低最高楼层间的随机整数
 ```
 
-### 仿真结果
+### 现状仿真结果
 
 由于仿真的次数取了times=10,000次，可以确定结果已经非常接近理论值。将每次仿真结果用散点图来表示。
 ```python
@@ -61,6 +61,30 @@ for i in range(STUNUM):
 <p align="center">
     <img src="https://github.com/wokegrdws/Markdown-Images/blob/master/大运村电梯优化图集/现在情况结果.png"  width=80% height=80%>
     <p align="center">
-        <em>图片示例2</em>
+        <em>现在情况仿真结果</em>
     </p>
 </p>
+
+即，未优化前，中午高峰期大运村电梯上行过程中每个学生平均花费的时间是53.8秒。 我们将以这个未优化的数据为参考标准，衡量下面调度优化方案的效果。
+
+## 单双层优化
+
+本文对两个电梯进行设置:电梯A只能在单数层停留，电梯B只能在双数层停留。
+
+这里将对A、B两个电梯分别进行仿真，将分别得出的结果求平均即可作为最终结果。
+
+每个学生随机均匀**单数**目标楼层的产生函数:
+```python
+for i in range(STUNUM):
+    stu[i].floor = random.randrange(FLOLOW, FLOHIGH, 2)
+    stu[i].floor = stu[i].floor + 1
+```
+
+每个学生随机均匀**双数**目标楼层的产生函数:
+```python
+for i in range(STUNUM):
+    stu[i].floor = random.randrange(FLOLOW, FLOHIGH + 1, 2)
+```
+
+其余不变进行仿真。
+
