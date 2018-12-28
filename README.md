@@ -27,7 +27,7 @@
 将先决条件用程序语言表示。在这里两个电梯是完全一样的，不必分开考虑。通过随机数随机产生每个同学的目标楼层，对每次电梯的上行进行仿真。本文采用每个同学在 整个过程中花费时间的平均值来描述某种调度方法的效率。重复以上仿真若干次，可以提高结果的精度。整体算法的伪代码如Algorithm1。
 
 <p align="center">
-    <img src="https://github.com/wokegrdws/Markdown-Images/blob/master/大运村电梯优化图集/alg.png"  width=70% height=70%>
+    <img src="https://github.com/wokegrdws/Markdown-Images/blob/master/大运村电梯优化图集/alg.png"  width=80% height=80%>
     <p align="center">
         <em></em>
     </p>
@@ -60,7 +60,7 @@ for i in range(STUNUM):
 ```
 
 <p align="center">
-    <img src="https://github.com/wokegrdws/Markdown-Images/blob/master/大运村电梯优化图集/现在情况结果.png"  width=80% height=80%>
+    <img src="https://github.com/wokegrdws/Markdown-Images/blob/master/大运村电梯优化图集/现在情况结果.png"  width=100% height=100%>
     <p align="center">
         <em>现在情况仿真结果</em>
     </p>
@@ -95,7 +95,7 @@ for i in range(STUNUM):
 ```
 
 <p align="center">
-    <img src="https://github.com/wokegrdws/Markdown-Images/blob/master/大运村电梯优化图集/奇数情况结果.png"  width=70% height=70%>
+    <img src="https://github.com/wokegrdws/Markdown-Images/blob/master/大运村电梯优化图集/奇数情况结果.png"  width=100% height=100%>
     <p align="center">
         <em>单数情况仿真结果</em>
     </p>
@@ -106,7 +106,7 @@ for i in range(STUNUM):
 学生的平均等待时间是45.633866666666734
 ```
 <p align="center">
-    <img src="https://github.com/wokegrdws/Markdown-Images/blob/master/大运村电梯优化图集/偶数情况结果.png"  width=70% height=70%>
+    <img src="https://github.com/wokegrdws/Markdown-Images/blob/master/大运村电梯优化图集/偶数情况结果.png"  width=100% height=100%>
     <p align="center">
         <em>双数情况仿真结果</em>
     </p>
@@ -140,7 +140,7 @@ FLOHIGH = 18 #最高第18层
 ```
 
 <p align="center">
-    <img src="https://github.com/wokegrdws/Markdown-Images/blob/master/大运村电梯优化图集/低层情况结果.png"  width=70% height=70%>
+    <img src="https://github.com/wokegrdws/Markdown-Images/blob/master/大运村电梯优化图集/低层情况结果.png"  width=100% height=100%>
     <p align="center">
         <em>低层情况仿真结果</em>
     </p>
@@ -152,7 +152,7 @@ FLOHIGH = 18 #最高第18层
 ```
 
 <p align="center">
-    <img src="https://github.com/wokegrdws/Markdown-Images/blob/master/大运村电梯优化图集/高层情况结果.png"  width=70% height=70%>
+    <img src="https://github.com/wokegrdws/Markdown-Images/blob/master/大运村电梯优化图集/高层情况结果.png"  width=100% height=100%>
     <p align="center">
         <em>高层情况仿真结果</em>
     </p>
@@ -175,7 +175,7 @@ FLOHIGH = 18 #最高第18层
 ## 结论
 
 <p align="center">
-    <img src="https://github.com/wokegrdws/Markdown-Images/blob/master/大运村电梯优化图集/各情况比较.png"  width=70% height=70%>
+    <img src="https://github.com/wokegrdws/Markdown-Images/blob/master/大运村电梯优化图集/各情况比较.png"  width=100% height=100%>
     <p align="center">
         <em>各情况比较</em>
     </p>
