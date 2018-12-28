@@ -99,10 +99,9 @@ for i in range(STUNUM):
 学生的平均等待时间是45.633866666666734
 ```
 
-<figure class="half">
-    <img src="https://github.com/wokegrdws/Markdown-Images/blob/master/大运村电梯优化图集/奇数情况结果.png">
-    <img src="https://github.com/wokegrdws/Markdown-Images/blob/master/大运村电梯优化图集/偶数情况结果.png">
-</figure>
+<div style="float:left;border:solid 1px 000;margin:2px;"><img src="https://github.com/wokegrdws/Markdown-Images/blob/master/大运村电梯优化图集/奇数情况结果.png"  width="200" height="260" ></div>
+
+<div style="float:left;border:solid 1px 000;margin:2px;"><img src="https://github.com/wokegrdws/Markdown-Images/blob/master/大运村电梯优化图集/偶数情况结果.png" width="200" height="260" ></div>
 
 
 
