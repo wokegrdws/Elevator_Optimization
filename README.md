@@ -210,7 +210,6 @@ FLOHIGH = 10 #最高第10层
 包含以下文件：
 + readme的Markdown文件：README.md
 + 大作业报告：Report.pdf
-+ 生成报告的LaTeX文件：Report_LaTeX.tex
 + 对现在情况进行仿真的python代码：现在情况.py
 
 ## Contact Me
