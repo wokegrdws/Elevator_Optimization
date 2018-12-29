@@ -1,0 +1,386 @@
+%++++++++++++++++++++++++++++++++++++++++
+% Don't modify this section unless you know what you're doing!
+\documentclass[letterpaper,12pt]{article}
+\usepackage{tabularx} % extra features for tabular environment
+\usepackage{amsmath}  % improve math presentation
+\usepackage{graphicx} % takes care of graphic including machinery
+\usepackage[margin=1in,letterpaper]{geometry} % decreases margins
+\usepackage{cite} % takes care of citations
+\usepackage[final]{hyperref} % adds hyper links inside the generated pdf file
+\usepackage{ctex} % Chinese package
+\usepackage{pythonhighlight} %python highlight
+\usepackage{appendix} %附录包
+\usepackage{url}
+
+%伪代码包
+\usepackage{algorithm}  
+\usepackage{algpseudocode}  
+\usepackage{amsmath}  
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}  % Use Input in the format of Algorithm  
+\renewcommand{\algorithmicensure}{\textbf{Output:}} % Use Output in the format of Algorithm  
+
+
+
+\hypersetup{
+	colorlinks=true,       % false: boxed links; true: colored links
+	linkcolor=blue,        % color of internal links
+	citecolor=blue,        % color of links to bibliography
+	filecolor=magenta,     % color of file links
+	urlcolor=blue         
+}
+%++++++++++++++++++++++++++++++++++++++++
+
+
+\begin{document}
+
+\title{大运村电梯调度优化}
+\author{15071162 王瑞烨}
+\date{\today}
+\maketitle
+\iffalse
+\begin{abstract}
+本文对大运村公寓现有的电梯调度进行了观察、记录、仿真，发现了有很大的优化空间。特别是针对中午时间大批同学需要通过电梯上楼造成极度拥挤的现象，本文给出了两种优化方案，分别用python进行了仿真，并将优化结果与现有的情况进行了比较。
+
+\textbf{关键字：}电梯调度 \quad 优化 \quad python仿真
+
+\end{abstract}
+\fi
+
+建议你在这里查看和下载本项目：\url{https://github.com/wokegrdws/Elevator_Optimization}
+
+\section{背景介绍}
+
+大运村最高的楼层达到18层，对于住在高楼层的同学来说，大运村公寓最烦心的事情就是上下楼了。电梯上行的过程中需要在不同的低楼层停留多次，才能到达自己的楼层，下行也同理。
+
+特别是在中午上楼的时候，电梯口会挤满下了课回寝室的同学。不仅电梯内会在上行的过程中很挤，不断在各个楼层停留，而且很多同学甚至挤不上第一班电梯，需要等待下一班。也有同学宁愿会选择步行走上十几层楼梯。中午时分这个拥挤的过程至少会持续20分钟，而同学们被浪费的时间是非常多的。
+
+为了减少同学们中午等待电梯时间的浪费，本文对中午高峰期电梯上行的调度用python进行了模拟仿真，并提出了优化方案。
+
+
+
+
+\section{现状分析}
+\subsection{先决条件}\label{先决条件}
+通过对大运村真实情况以及同学们心理的观察，本文将中午高峰期电梯上楼的真实情况简化，抽象出以下先决条件：
+\begin{itemize}
+    \item 电梯最低在1层，最高在18层，所有同学只在1层上电梯
+    \item 各个寝室分布在2层至18层
+    \item 住在第2、3层的同学选择不坐电梯
+    \item 同学只愿意去往自己住的楼层，而不愿意去相邻楼层再步行至自己楼层
+    \item 同学去往不同楼层的可能性是均匀分布的
+    \item 电梯每上行一层花费时间2秒
+    \item 电梯每停一次（加减速、开门、进出、关门）花费时间8秒
+    \item 同学平均在电梯停下后4秒离开电梯
+    \item 共有两个电梯，每个电梯每次最多承载12人
+    \item 高峰期上行的电梯始终能满载
+\end{itemize}
+
+\begin{figure}[H]
+
+\centering
+\includegraphics[scale=0.7]{现在情况电梯.png}
+\caption{现在情况电梯}
+\label{fig:现在情况电梯}
+ 
+\end{figure}
+
+\subsection{仿真实现}
+将先决条件\ref{先决条件}用程序语言表示。在这里两个电梯是完全一样的，不必分开考虑。通过随机数随机产生每个同学的目标楼层，对每次电梯的上行进行仿真。本文采用每个同学在整个过程中花费时间的平均值来描述某种调度方法的效率。重复以上仿真若干次，可以提高结果的精度。整体算法的伪代码如Algorithm\ref{alg:现状}。完整源代码见附录\ref{appendix:现状仿真源代码}。
+\begin{algorithm}[H]  
+  \caption{现状仿真} \label{alg:现状}
+  \begin{algorithmic}[1]
+    \Require 仿真次数、电梯满载人数、电梯停留最低层、电梯停留最高层、电梯每层上升时间、电梯停留时间、学生出电梯平均时间
+    \For{$i=0$; $i<$仿真次数; $i++$ }  
+      \State 随机均匀产生每个学生目标楼层
+      \State 查找每个楼层需要出多少学生
+      \State 去除重复的楼层，排序得到电梯停留楼层
+      \State 对比每一个学生的层数和电梯停留的楼层，计算每个学生的等待时间
+      \State 计算所有学生平均等待时间
+    \EndFor  
+    \State 计算所有仿真的平均结果
+    \Ensure 仿真的平均结果
+  \end{algorithmic}  
+\end{algorithm}  
+
+这里的输入是：
+\begin{python}
+import random
+import numpy as np
+
+STUNUM = 12 #电梯满载人数
+FLOLOW = 4 #最低第4层
+FLOHIGH = 18 #最高第18层
+TRIP_DURATION = 2 #上升时间
+STOP_DURATION = 8 #停止时间
+OUT_DURATION = 4 #平均出电梯时间
+times = 10000 #仿真10,000次
+\end{python}
+
+每个学生随机均匀目标楼层的产生函数：
+\begin{python}
+for i in range(STUNUM):
+    stu[i].floor = random.randint(FLOLOW, FLOHIGH) #产生（包括）最低最高楼层间的随机整数
+\end{python}
+
+
+\subsection{仿真结果}
+由于仿真的次数取了$times = 10,000$次，可以确定结果已经非常接近理论值。如图\ref{fig:现在情况仿真结果}，将每次仿真结果用散点图来表示。
+\begin{python}
+学生的平均等待时间是53.78898333333308
+\end{python}
+
+
+\begin{figure}[H]
+
+\centering
+\includegraphics[scale=1.0]{现在情况结果.png}
+\caption{现在情况仿真结果}
+\label{fig:现在情况仿真结果}
+ 
+\end{figure}
+
+
+
+即，未优化前，中午高峰期大运村电梯上行过程中每个学生平均花费的时间是53.8秒。我们将以这个未优化的数据为参考标准，衡量下面调度优化方案的效果。
+{}
+\section{单双层优化}\label{单双层优化}
+本文对两个电梯进行设置：电梯A只能在单数层停留，电梯B只能在双数层停留。
+
+\begin{figure}[H]
+
+\centering
+\includegraphics[scale=0.7]{单双层情况电梯.png}
+\caption{单双层情况电梯}\label{fig:单双层情况电梯}
+\end{figure}
+
+\subsection{仿真实现}
+这里将对A、B两个电梯分别进行仿真，将分别得出的结果求平均即可作为最终结果。
+
+每个学生随机均匀\textbf{单数}目标楼层的产生函数：
+\begin{python}
+for i in range(STUNUM):
+    stu[i].floor = random.randrange(FLOLOW, FLOHIGH, 2)
+    stu[i].floor = stu[i].floor + 1
+\end{python}
+
+每个学生随机均匀\textbf{双数}目标楼层的产生函数：
+\begin{python}
+for i in range(STUNUM):
+    stu[i].floor = random.randrange(FLOLOW, FLOHIGH + 1, 2)
+\end{python}
+
+其余不变进行仿真。
+
+\subsection{仿真结果}
+\textbf{单数}电梯的仿真结果是：
+\begin{python}
+学生的平均等待时间是43.54270000000004
+\end{python}
+
+
+\textbf{双数}电梯的仿真结果是：
+\begin{python}
+学生的平均等待时间是45.633866666666734
+\end{python}
+
+\begin{figure}[H]
+\begin{minipage}[t]{0.5\linewidth}
+\centering
+\includegraphics[width=3.2in]{奇数情况结果.png}
+\caption{单数情况仿真结果}
+\label{单数情况仿真结果}
+\end{minipage}%
+\begin{minipage}[t]{0.5\linewidth}
+\centering
+\includegraphics[width=3.2in]{偶数情况结果.png}
+\caption{双数情况仿真结果}
+\label{双数情况仿真结果}
+\end{minipage}
+\end{figure}
+
+对结果取平均得每个学生平均花费的时间是44.6秒。相比未优化前的53.8秒节约了17.1\%的时间。
+
+
+\section{高低层优化}\label{高低层优化}
+本文对两个电梯进行设置：电梯A只能在4至10层停留，电梯B只能在11至18层停留。
+
+\begin{figure}[H]
+
+\centering
+\includegraphics[scale=0.7]{高低层情况电梯.png}
+\caption{高低层情况电梯}
+\label{fig:高低层情况电梯}
+ 
+\end{figure}
+
+\subsection{仿真实现}
+这里将对A、B两个电梯分别进行仿真，将分别得出的结果求平均即可作为最终结果。
+
+\textbf{高层}电梯的输入为：
+\begin{python}
+FLOLOW = 11 #最低第11层
+FLOHIGH = 18 #最高第18层
+\end{python}
+
+
+\textbf{低层}电梯的输入为：
+\begin{python}
+FLOLOW = 4 #最低第4层
+FLOHIGH = 10 #最高第10层
+\end{python}
+
+其余不变进行仿真。
+
+\subsection{仿真结果}
+
+\textbf{高层}电梯的仿真结果是：
+\begin{python}
+学生的平均等待时间是52.58893333333316
+\end{python}
+
+\textbf{低层}电梯的仿真结果是：
+\begin{python}
+学生的平均等待时间是35.61570000000019
+\end{python}
+
+
+
+\begin{figure}[H]
+\begin{minipage}[t]{0.5\linewidth}
+\centering
+\includegraphics[width=3.2in]{高层情况结果.png}
+\caption{高层情况仿真结果}
+\label{高层情况仿真结果}
+\end{minipage}%
+\begin{minipage}[t]{0.5\linewidth}
+\centering
+\includegraphics[width=3.2in]{低层情况结果.png}
+\caption{低层情况仿真结果}
+\label{低层情况仿真结果}
+\end{minipage}
+\end{figure}
+对结果取平均得每个学生平均花费的时间是44.1秒。相比未优化前的53.8秒节约了18.0\%的时间。
+
+\section{不足及改进}
+本文的仿真是非常粗略的，主要体现在对现实问题的抽象非常粗略，因此有非常多的不足和非常大的改进空间。主要有以下：
+\begin{itemize}
+    \item 大运村不同楼的楼层数有一定的不同
+    \item 需要上楼的同学并不是随机均匀分布在各个楼层的
+    \item 不同楼层学生出电梯速度是不同的，越往高层人越少，速度越快
+    \item 单双层、高低层的优化方案是根据经验得出来的
+    \item 显然存在更好的优化方案，尽管最优方案很难得出
+    \item 如果采用了优化方案，学生可能会选择乘电梯到达相近的楼层
+    \item 尽管是粗略的抽象，也需要严格的数学证明与仿真结果配合
+\end{itemize}
+
+\section{结论}
+\begin{figure}[H]
+
+\centering
+\includegraphics[scale=1.0]{各情况比较.png}
+\caption{各情况比较}
+\label{各情况比较}
+ 
+\end{figure}
+本文针对大运村中午高峰期电梯上行的情况，提供了两种经验优化方案，如图\ref{各情况比较}。单双层优化（见\ref{单双层优化}）能为学生节约17.1\%的时间，高低层优化（见\ref{高低层优化}）能节约18.0\%。显然对于大运村的电梯，有更好的优化方案，也需要严密的数学证明。扩展来看，很多其他地方的电梯同样也需要得到优化。
+
+\newpage
+
+
+
+
+\begin{appendix}
+\section{现状仿真源代码}\label{appendix:现状仿真源代码}
+\begin{python}
+import random
+import numpy as np
+
+STUNUM = 12 #电梯满载人数
+FLOLOW = 4 #最低第4层
+FLOHIGH = 18 #最高第18层
+TRIP_DURATION = 2 #上升时间
+STOP_DURATION = 8 #停止时间
+OUT_DURATION = 4 #平均出电梯时间
+
+#创建学生类
+class Student(object):
+    def __init__(self, num, floor, time):
+        self.num = num
+        self.floor = floor
+        self.time = time
+
+#去除列表内重复元素函数
+def deleteDuplicatedElementFromList(list):
+        list.sort();
+        print("sorted list:%s" % list)
+        length = len(list)
+        lastItem = list[length - 1]
+        for i in range(length - 2,-1,-1):
+                currentItem = list[i]
+                if currentItem == lastItem:
+                        list.remove(currentItem)
+                else:
+                        lastItem = currentItem
+        return list
+
+#写成一个函数，方便后面调用很多次
+def calculatemean():
+    #12个学生
+    stu0 = Student(0, random.randint(FLOLOW, FLOHIGH), 0)
+    stu1 = Student(1, random.randint(FLOLOW, FLOHIGH), 0)
+    stu2 = Student(2, random.randint(FLOLOW, FLOHIGH), 0)
+    stu3 = Student(3, random.randint(FLOLOW, FLOHIGH), 0)
+    stu4 = Student(4, random.randint(FLOLOW, FLOHIGH), 0)
+    stu5 = Student(5, random.randint(FLOLOW, FLOHIGH), 0)
+    stu6 = Student(6, random.randint(FLOLOW, FLOHIGH), 0)
+    stu7 = Student(7, random.randint(FLOLOW, FLOHIGH), 0)
+    stu8 = Student(8, random.randint(FLOLOW, FLOHIGH), 0)
+    stu9 = Student(9, random.randint(FLOLOW, FLOHIGH), 0)
+    stu10 = Student(10, random.randint(FLOLOW, FLOHIGH), 0)
+    stu11 = Student(11, random.randint(FLOLOW, FLOHIGH), 0)
+
+    #12个对象存放于元组（不可更改）
+    stu = (stu0, stu1, stu2, stu3, stu4, stu5, stu6, stu7, stu8, stu9, stu10, stu11)
+
+    #对象的层数存放与列表
+    list = [stu[0].floor, stu[1].floor, stu[2].floor, stu[3].floor, stu[4].floor, stu[5].floor, stu[6].floor, stu[7].floor, stu[8].floor, stu[9].floor, stu[10].floor, stu[11].floor]
+
+    #查找各个楼层下了多少人
+    myset = set(list)
+    for item in myset:
+        print("第%d层下了%d个学生" %(item,list.count(item)))
+
+    #去除重复的楼层后，排序得到电梯停留楼层，list已经改变了
+    deleteDuplicatedElementFromList(list)
+
+    #打印电梯停留的楼层
+    print('电梯停留的楼层是', list)
+
+    #将每一个学生的层数i和电梯停留的楼层在表中的位置j对比，计算每个学生的等待时间并打印
+    for i in range(STUNUM):
+        for j in range(len(list)):
+            if stu[i].floor == list[j]:
+                stu[i].time = (stu[i].floor - 1) * TRIP_DURATION + (j + 1) * STOP_DURATION - (STOP_DURATION - OUT_DURATION)
+        print('第',stu[i].num,'号学生的等待时间是', stu[i].time)
+
+    #取平均
+    sum_time = 0
+    for i in range(STUNUM):
+        sum_time = sum_time + stu[i].time
+
+    mean_time = sum_time / STUNUM
+    return mean_time
+
+#调用无数次，取平均作为仿真结果
+add_time = 0
+times = 10000
+for i in range(times):
+    add_time = add_time + calculatemean()
+ave_time = add_time / times
+print('学生的平均等待时间是', ave_time)
+\end{python}
+\end{appendix}
+
+
+
+\end{document}
