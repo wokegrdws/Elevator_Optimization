@@ -23,9 +23,9 @@
 + 高峰期上行的电梯始终能满载
 
 <p align="center">
-    <img src="https://github.com/wokegrdws/Markdown-Images/blob/master/大运村电梯优化图集/现在电梯情况.png"  width=100% height=100%>
+    <img src="https://github.com/wokegrdws/Markdown-Images/blob/master/大运村电梯优化图集/现在情况电梯.png"  width=100% height=100%>
     <p align="center">
-        <em></em>
+        <em>现在情况电梯</em>
     </p>
 </p>
 
@@ -79,6 +79,13 @@ for i in range(STUNUM):
 
 本文对两个电梯进行设置:电梯A只能在单数层停留，电梯B只能在双数层停留。
 
+<p align="center">
+    <img src="https://github.com/wokegrdws/Markdown-Images/blob/master/大运村电梯优化图集/单双层情况电梯.png"  width=100% height=100%>
+    <p align="center">
+        <em>单双层情况电梯</em>
+    </p>
+</p>
+
 这里将对A、B两个电梯分别进行仿真，将分别得出的结果求平均即可作为最终结果。
 
 每个学生随机均匀**单数**目标楼层的产生函数:
@@ -125,13 +132,14 @@ for i in range(STUNUM):
 
 本文对两个电梯进行设置:电梯A只能在4至10层停留，电梯B只能在11至18层停留。
 
-这里将对A、B两个电梯分别进行仿真，将分别得出的结果求平均即可作为最终结果。
+<p align="center">
+    <img src="https://github.com/wokegrdws/Markdown-Images/blob/master/大运村电梯优化图集/高低层情况电梯.png"  width=100% height=100%>
+    <p align="center">
+        <em>高低层情况电梯</em>
+    </p>
+</p>
 
-**低层**电梯的输入为:
-```python
-FLOLOW = 4 #最低第4层
-FLOHIGH = 10 #最高第10层
-```
+这里将对A、B两个电梯分别进行仿真，将分别得出的结果求平均即可作为最终结果。
 
 **高层**电梯的输入为:
 ```python
@@ -139,19 +147,13 @@ FLOLOW = 11 #最低第11层
 FLOHIGH = 18 #最高第18层
 ```
 
-其余不变进行仿真。
-
-**低层**电梯的仿真结果是:
+**低层**电梯的输入为:
 ```python
-学生的平均等待时间是35.61570000000019
+FLOLOW = 4 #最低第4层
+FLOHIGH = 10 #最高第10层
 ```
 
-<p align="center">
-    <img src="https://github.com/wokegrdws/Markdown-Images/blob/master/大运村电梯优化图集/低层情况结果.png"  width=100% height=100%>
-    <p align="center">
-        <em>低层情况仿真结果</em>
-    </p>
-</p>
+其余不变进行仿真。
 
 **高层**电梯的仿真结果是:
 ```python
@@ -162,6 +164,18 @@ FLOHIGH = 18 #最高第18层
     <img src="https://github.com/wokegrdws/Markdown-Images/blob/master/大运村电梯优化图集/高层情况结果.png"  width=100% height=100%>
     <p align="center">
         <em>高层情况仿真结果</em>
+    </p>
+</p>
+
+**低层**电梯的仿真结果是:
+```python
+学生的平均等待时间是35.61570000000019
+```
+
+<p align="center">
+    <img src="https://github.com/wokegrdws/Markdown-Images/blob/master/大运村电梯优化图集/低层情况结果.png"  width=100% height=100%>
+    <p align="center">
+        <em>低层情况仿真结果</em>
     </p>
 </p>
 
