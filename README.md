@@ -208,9 +208,9 @@ FLOHIGH = 10 #最高第10层
 
 本项目由业余选手开发，是为了满足课程“工业工程原理与应用”的部分要求。
 包含以下文件：
-+ readme的Markdown文件：README.md
-+ 大作业报告：Report.pdf
-+ 对现在情况进行仿真的python代码：现在情况.py
++ **README.md：** readme的Markdown文件
++ **Report.pdf：** 大作业报告
++ **现在情况.py：** 对现在情况进行仿真的python代码
 
 ## Contact Me
 
