@@ -59,9 +59,18 @@ for i in range(STUNUM):
     stu[i].floor = random.randint(FLOLOW, FLOHIGH) #产生(包括)最低最高楼层间的随机整数
 ```
 
+计算每个学生等待时间:
+```python
+for i in range(STUNUM):
+    for j in range(len(list)):
+        if stu[i].floor == list[j]:
+            stu[i].time = (stu[i].floor - 1) * TRIP_DURATION + (j + 1) * STOP_DURATION - (STOP_DURATION - OUT_DURATION)
+    print('第',stu[i].num,'号学生的等待时间是', stu[i].time)
+```
+
 ### 现状仿真结果
 
-由于仿真的次数取了times=10,000次，可以确定结果已经非常接近理论值。将每次仿真结果用散点图来表示。
+由于仿真的次数取了times=10,000次，可以确定结果已经非常接近理论值。将每次仿真结果用散点图来表示。每个散点表示每次仿真的结果，并求出了平均时间。
 ```python
 学生的平均等待时间是53.78898333333308
 ```
@@ -207,13 +216,9 @@ FLOHIGH = 10 #最高第10层
 ## Statement
 
 本项目由业余选手开发，是为了满足课程“工业工程原理与应用”的部分要求。
-包含以下文件：
-+ **README.md：** readme的Markdown文件
-+ **Report.pdf：** 大作业报告
-+ **现在情况.py：** 对现在情况进行仿真的python代码
 
 ## Contact Me
 
-+ Email: wangruiye@buaa.edu.cn
++ wokegrdws[at]gmail.com
 
 
