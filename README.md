@@ -211,6 +211,13 @@ FLOHIGH = 10 #最高第10层
     </p>
 </p>
 
+<p align="center">
+    <img src="https://github.com/wokegrdws/Markdown-Images/blob/master/大运村电梯优化图集/比较结果柱形图.png"  width=100% height=100%>
+    <p align="center">
+        <em>比较结果柱形图</em>
+    </p>
+</p>
+
 本文针对大运村中午高峰期电梯上行的情况，提供了两种经验优化方案。单双层优化能为学生节约17.1%的时间，高低层优化能节约18.0%。显然对于大运村的电梯，有更好的优化方案，也需要严密的数学证明。扩展来看，很多其他地方的电梯同样也需要得到优化。
 
 ## Statement
